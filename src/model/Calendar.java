@@ -17,7 +17,16 @@ public class Calendar {
     public Date getCurrentDate() { return currentDate; }
     public String getOwnerEmail() { return ownerEmail; }
     public List<Entry> getEntries() { return entries; }
-    public List<Meeting> getMeetings() { return new ArrayList<>(); }
+    public List<Meeting> getMeetings() {
+        List<Meeting> out = new ArrayList<>();
+        for (Entry entry : entries
+             ) {
+            if(entry instanceof Meeting) {
+                out.add((Meeting) entry);
+            }
+        }
+        return out;
+    }
     public List<Event> getEvents() { return new ArrayList<>(); }
 
     // TODO
