@@ -7,7 +7,7 @@ public class Date {
     public int day;
     public int month;
     public int year;
-    public Map<Integer, String> date_mapping = new HashMap<>();
+    public  static Map<Integer, String> date_mapping = Date.instantiateMap();
 
     public Date(int day, int month, int year) {
         setDay(day);
@@ -25,19 +25,22 @@ public class Date {
         return(month_name + " " + day + ", " + year);
     }
 
-    private void instantiateMap() {
-        date_mapping.put(1, "January");
-        date_mapping.put(2, "February");
-        date_mapping.put(3, "March");
-        date_mapping.put(4, "April");
-        date_mapping.put(5, "May");
-        date_mapping.put(6, "June");
-        date_mapping.put(7, "July");
-        date_mapping.put(8, "August");
-        date_mapping.put(9, "September");
-        date_mapping.put(10, "October");
-        date_mapping.put(11, "November");
-        date_mapping.put(12, "December");
+    private static Map<Integer, String> instantiateMap() {
+        Map<Integer, String> mapping = new HashMap<>();
+        mapping.put(1, "January");
+        mapping.put(2, "February");
+        mapping.put(3, "March");
+        mapping.put(4, "April");
+        mapping.put(5, "May");
+        mapping.put(6, "June");
+        mapping.put(7, "July");
+        mapping.put(8, "August");
+        mapping.put(9, "September");
+        mapping.put(10, "October");
+        mapping.put(11, "November");
+        mapping.put(12, "December");
+
+        return mapping;
     }
 
     public void setDay(int day) {
@@ -55,5 +58,26 @@ public class Date {
     @Override
     public String toString() {
         return getShortDate();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Date)) {
+            return false;
+        }
+
+        Date c = (Date) o;
+
+        if (
+                this.day == c.day && this.month == c.month && this.year == c.year
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }

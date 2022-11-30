@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,11 +17,13 @@ public class TestCalendar {
     Event e2;
     Meeting m1;
     Meeting m2;
+    Date d1;
 
     @Before
     public void setUp() {
+        d1 = new Date(20, 10, 2020);
         calendar = new Calendar(
-                new Date(20, 10, 2020),
+                d1,
                 "john.salinger@bean.stalk"
         );
 
@@ -43,23 +45,23 @@ public class TestCalendar {
 
     @Test
     public void testConstructor() {
-        assertEquals(calendar.getCurrentDate(), new Date(20, 10, 2020));
-        assertEquals(calendar.getOwnerEmail(), "john.salinger@bean.stalk");
+        assertEquals(d1, calendar.getCurrentDate());
+        assertEquals("john.salinger@bean.stalk", calendar.getOwnerEmail());
     }
 
     @Test
     public void testGetEmptyEntries() {
-        assertEquals(calendar.getEntries(), new ArrayList<>());
+        assertEquals(new HashSet<>(), calendar.getEntries());
     }
 
     @Test
     public void testGetEmptyMeetings() {
-        assertEquals(calendar.getMeetings(), new ArrayList<>());
+        assertEquals(new HashSet<>(), calendar.getMeetings());
     }
 
     @Test
     public void testGetEmptyEvents() {
-        assertEquals(calendar.getEvents(), new ArrayList<>());
+        assertEquals(new HashSet<>(), calendar.getEvents());
     }
 
     @Test
@@ -68,10 +70,10 @@ public class TestCalendar {
 
         calendar.addEntry(e1);
 
-        ArrayList<Entry> array = new ArrayList<>();
+        HashSet<Entry> array = new HashSet<>();
         array.add(e1);
 
-        assertEquals(calendar.getEntries(), array);
+        assertEquals(array, calendar.getEntries());
     }
 
     @Test
@@ -82,27 +84,27 @@ public class TestCalendar {
         calendar.addEntry(e1);
         calendar.addEntry(e2);
 
-        ArrayList<Entry> array = new ArrayList<>();
+        HashSet<Entry> array = new HashSet<>();
         array.add(e1);
 
-        assertEquals(calendar.getEntriesByDate(new Date(20, 12, 2022)), array);
+        assertEquals(array, calendar.getEntriesByDate(new Date(20, 12, 2022)));
     }
 
     @Test
     public void testGetOneEntryByDateEmpty() {
-        assertEquals(calendar.getEntriesByDate(new Date(20, 12, 2022)), null);
+        assertEquals(new HashSet<>(), calendar.getEntriesByDate(new Date(20, 12, 2022)));
     }
 
     @Test
     public void testGetEntryByLabelEmpty() {
-        assertEquals(calendar.getEntryByLabel("Personal"), null);
+        assertEquals(null, calendar.getEntryByLabel("Personal"));
     }
 
     @Test
     public void testGetEntryByLabelOne() {
         Entry e1 = new Event(new Date(10, 10, 2022), new Time(10, 10), "Test");
         calendar.addEntry(e1);
-        assertEquals(calendar.getEntryByLabel("Test"), e1);
+        assertEquals(e1, calendar.getEntryByLabel("Test"));
     }
 
     @Test
@@ -110,7 +112,7 @@ public class TestCalendar {
         assertEquals(calendar.getEntries().size(), 0);
         Entry e1 = new Event(new Date(10, 10, 2022), new Time(10, 10), "Test");
         calendar.addEntry(e1);
-        assertEquals(calendar.getEntries().size(), 1);
+        assertEquals(1, calendar.getEntries().size());
     }
 
     @Test
@@ -119,31 +121,29 @@ public class TestCalendar {
         Entry e1 = new Event(new Date(10, 10, 2022), new Time(10, 10), "Test");
         calendar.addEntry(e1);
         calendar.addEntry(e1);
-        assertEquals(calendar.getEntries().size(), 1);
+        assertEquals(1, calendar.getEntries().size());
     }
 
     @Test
     public void testGetEvents() {
-        ArrayList<Event> a1 = new ArrayList<>();
-        Event e1 = new Event(new Date(20, 12, 2022), new Time(10, 10), "Personal");
-        Event e2 = new Event(new Date(10, 12, 2022), new Time(10, 10), "Personal");
+        HashSet<Event> a1 = new HashSet<>();
         a1.add(e1);
         a1.add(e2);
-        assertEquals(filledCalendar.getEvents(), a1);
+        assertEquals(a1, filledCalendar.getEvents());
     }
 
     @Test
     public void testGetMeetings() {
-        ArrayList<Event> a1 = new ArrayList<>();
+        HashSet<Event> a1 = new HashSet<>();
         a1.add(m1);
         a1.add(m2);
-        assertEquals(filledCalendar.getMeetings(), a1);
+        assertEquals(a1, filledCalendar.getMeetings());
     }
 
     @Test
     public void testRemoveEntryByLabel() {
-        assertEquals(filledCalendar.getEntries().size(), 4);
+        assertEquals(4, filledCalendar.getEntries().size());
         filledCalendar.removeEntryByLabel("Event1");
-        assertEquals(filledCalendar.getEntries().size(), 3);
+        assertEquals(3, filledCalendar.getEntries().size());
     }
 }

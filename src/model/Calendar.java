@@ -1,12 +1,12 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Calendar {
     Date currentDate;
     String ownerEmail;
-    List<Entry> entries = new ArrayList<Entry>();
+    Set<Entry> entries = new HashSet<>();
 
     public Calendar(Date currentDate, String ownerEmail) {
         this.currentDate = currentDate;
@@ -16,9 +16,9 @@ public class Calendar {
     // getters
     public Date getCurrentDate() { return currentDate; }
     public String getOwnerEmail() { return ownerEmail; }
-    public List<Entry> getEntries() { return entries; }
-    public List<Meeting> getMeetings() {
-        List<Meeting> out = new ArrayList<>();
+    public Set<Entry> getEntries() { return entries; }
+    public Set<Meeting> getMeetings() {
+        Set<Meeting> out = new HashSet<>();
         for (Entry entry : entries
              ) {
             if(entry instanceof Meeting) {
@@ -27,19 +27,40 @@ public class Calendar {
         }
         return out;
     }
-    public List<Event> getEvents() { return new ArrayList<>(); }
+    public Set<Event> getEvents() {
+        Set<Event> out = new HashSet<>();
+        for (Entry entry : entries
+        ) {
+            if(!(entry instanceof Meeting)) {
+                out.add((Event) entry);
+            }
+        }
+        return out;
+     }
 
     // TODO
     // EFFECTS: returns an entry with a matching label if it exists
-    public Entry getEntryByLabel(String label) {return new Meeting(
-            new Date(10,10,10),
-            new Time(10, 10),
-            "");
+    public Entry getEntryByLabel(String label) throws NoSuchElementException {
+        try {
+            Entry output = entries.stream().filter(
+                    entry -> entry.getLabel() == label
+            ).findFirst().get();
+            return output;
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
     // TODO
     // EFFECTS: returns an entry with a matching label if it exists
-    public List<Entry> getEntriesByDate(Date date) { return new ArrayList<>(); }
+    public Set<Entry> getEntriesByDate(Date date) {
+
+        Set<Entry> output = entries.stream().filter(
+                entry -> entry.getDate().equals(date)
+        ).collect(Collectors.toSet());
+
+        return output;
+    }
 
     // setters
 
