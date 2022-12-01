@@ -55,7 +55,6 @@ public class Main {
         System.out.println(calendar.getEntries());
         System.out.println(calendar.getMeetings());
         System.out.println(calendar.getEvents());
-        System.out.println(calendar.getEvents());
         System.out.println(calendar.getEntryByLabel("Discuss Satan"));
         System.out.println(calendar.getEntriesByDate(new Date(1, 12, 2022)));
 

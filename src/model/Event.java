@@ -18,10 +18,9 @@ public class Event extends Entry{
 
     // setters
 
-    // TODO
     // MODIFIES: this
     // EFFECTS: Sets a reminder for the Event, replacing the old one if existing
     public void setReminder(Reminder reminder) {
-
+        this.reminder = reminder;
     }
 }

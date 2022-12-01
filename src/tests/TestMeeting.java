@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -39,7 +40,7 @@ public class TestMeeting {
 
     @Test
     public void testGetAttendees() {
-        assertEquals(meeting.getAttendees(), new ArrayList<>());
+        assertEquals(meeting.getAttendees(), new HashSet<>());
     }
 
     @Test
@@ -50,8 +51,9 @@ public class TestMeeting {
 
     @Test
     public void testRemoveAttendee() {
+        meeting.addAttendee(attendee);
         meeting.removeAttendee("j.j@bean.stalk");
 
-        assertEquals(meeting.getAttendees().contains(attendee), false);
+        assertEquals(false, meeting.getAttendees().contains(attendee));
     }
 }
