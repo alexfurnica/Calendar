@@ -38,7 +38,6 @@ public class Calendar {
         return out;
      }
 
-    // TODO
     // EFFECTS: returns an entry with a matching label if it exists
     public Entry getEntryByLabel(String label) throws NoSuchElementException {
         try {
@@ -51,7 +50,6 @@ public class Calendar {
         }
     }
 
-    // TODO
     // EFFECTS: returns an entry with a matching label if it exists
     public Set<Entry> getEntriesByDate(Date date) {
 
@@ -70,8 +68,9 @@ public class Calendar {
         entries.add(entry);
     }
 
-    // TODO
     // MODIFIES: this
     // EFFECTS: Removes an entry from the calendar by label
-    public void removeEntryByLabel(String label) {  }
+    public void removeEntryByLabel(String label) {
+        entries.removeIf(entry -> entry.getLabel() == label);
+    }
 }
